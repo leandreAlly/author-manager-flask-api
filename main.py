@@ -4,10 +4,12 @@ import logging
 from flask import Flask,jsonify
 from api.utils.database import db
 from api.config.config import ProductionConfig, TestingConfig, DevelopmentConfig
+from flask_jwt_extended import JWTManager 
 from api.utils.responses import response_with
 import api.utils.responses as resp
 from api.routes.authors import author_routes
 from api.routes.books import book_routes
+from api.routes.users import user_routes
  
 
 app = Flask(__name__)
@@ -23,11 +25,13 @@ else:
 app.config.from_object(app_config)
 
 db.init_app(app)
+jwt = JWTManager(app)
 with app.app_context():
     db.create_all()
 
 app.register_blueprint(author_routes, url_prefix='/api/authors')
 app.register_blueprint(book_routes, url_prefix='/api/books')
+app.register_blueprint(user_routes, url_prefix='/api/users')
 # START GLOBAL HTTP CONFIGURATIONS
 @app.after_request
 def add_header(response):
