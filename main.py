@@ -23,6 +23,7 @@ else:
     app_config = DevelopmentConfig
 
 app.config.from_object(app_config)
+app.config['SECRET_KEY'] = 'the random string' # Explore how to use env
 
 db.init_app(app)
 jwt = JWTManager(app)
