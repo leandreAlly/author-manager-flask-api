@@ -3,14 +3,17 @@ from api.utils.responses import response_with
 from api.utils import responses as resp
 from api.models.authors import Author, AuthorSchema
 from api.utils.database import db
-import logging
 from sqlalchemy.orm.exc import StaleDataError
 from datetime import datetime, timezone
+from flask_jwt_extended import jwt_required
+import logging
+
 
 logger = logging.getLogger(__name__)
 author_routes = Blueprint("author_routes", __name__)
 
 @author_routes.route("/", methods = ['POST'])
+@jwt_required()
 def create_author():
   try:
     data = request.get_json()
@@ -30,6 +33,7 @@ def create_author():
     print(e)
     return response_with(resp.INVALID_INPUT_422)
 
+@jwt_required()
 @author_routes.route("/", methods = ['GET'])
 def get_all_authors():
   try:
@@ -44,6 +48,7 @@ def get_all_authors():
     logger.error(f"Error fetching authors: {str(e)}")
     return response_with(resp.SERVER_ERROR_500)
 
+@jwt_required()
 @author_routes.route("/<int:author_id>", methods = ['GET'])
 def get_author_by_id(author_id):
   try:
@@ -59,7 +64,8 @@ def get_author_by_id(author_id):
   except Exception as e:
     logger.error(f"Error fetching author: {str(e)}")
     return response_with(resp.SERVER_ERROR_500)
-  
+
+@jwt_required()
 @author_routes.route("/<int:author_id>", methods = ['PUT'])
 def update_author_by_id(author_id):
   try:
@@ -76,7 +82,6 @@ def update_author_by_id(author_id):
           resp.SERVER_ERROR_404,
           message=f"Author with id {author_id} not found"
         )
-      
       
       try:
         author_schema = AuthorSchema(partial=True)
@@ -112,6 +117,8 @@ def update_author_by_id(author_id):
     current_app.logger.error(f"Error updating author {author_id}: {str(e)}")
     return response_with(resp.INVALID_INPUT_422)
 
+
+@jwt_required()
 @author_routes.route("/<int:author_id>", methods = ['DELETE'])
 def delete_author_by_id(author_id):
   try:
