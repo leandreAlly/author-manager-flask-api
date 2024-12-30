@@ -136,3 +136,4 @@ def verify_email(token):
             message="E-mail verified successfuly, you can proceed to log in!"
 
         )
+
