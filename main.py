@@ -10,9 +10,10 @@ import api.utils.responses as resp
 from api.routes.authors import author_routes
 from api.routes.books import book_routes
 from api.routes.users import user_routes
+from api.utils.email import mail
  
 
-app = Flask(__name__)
+app = Flask(__name__, template_folder='api/templates')
 
 
 if os.environ.get('WORK_ENV') == 'PROD':
@@ -27,6 +28,7 @@ app.config['SECRET_KEY'] = 'the random string' # Explore how to use env
 
 db.init_app(app)
 jwt = JWTManager(app)
+mail.init_app(app)
 with app.app_context():
     db.create_all()
 

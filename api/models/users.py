@@ -15,6 +15,7 @@ class User(db.Model):
   password = db.Column(db.String(255), nullable=False)
   is_active = db.Column(db.Boolean, default=True)
   created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+  is_verified = db.Column(db.Boolean, nullable=False, default=False)
   updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
   last_login = db.Column(db.DateTime)
 
@@ -42,7 +43,7 @@ class User(db.Model):
   
   @classmethod
   def find_by_email(cls, email):
-    return cls.query.filter_by(email=email, is_active=True).first()
+    return cls.query.filter_by(email = email, is_active=True).first()
   
   @staticmethod
   def generate_hash(password):
@@ -71,6 +72,7 @@ class UserSchema(SQLAlchemyAutoSchema):
   email = fields.Email(required=True)
   password = fields.String(required=True, load_only=True)
   is_active = fields.Boolean(dump_only=True)
+  is_verified = fields.Boolean(dump_only=True)
   created_at = fields.DateTime(dump_only=True)
   updated_at = fields.DateTime(dump_only=True)
   last_login = fields.DateTime(dump_only=True)
