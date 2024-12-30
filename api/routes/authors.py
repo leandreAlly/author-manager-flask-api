@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 from flask_jwt_extended import jwt_required
 import logging
 import os
+import uuid
 
 
 logger = logging.getLogger(__name__)
@@ -189,7 +190,8 @@ def upsert_author_avatar(author_id):
       get_author = Author.query.get_or_404(author_id)
       if file and allowed_file(file.content_type):
         filename = secure_filename(file.filename)
-        file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+        unique_filename = f"{uuid.uuid4().hex}_{filename}"
+        file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], unique_filename))
     
       get_author.avatar = url_for(
         'uploaded_file',
