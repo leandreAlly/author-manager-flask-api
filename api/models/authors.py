@@ -11,6 +11,7 @@ class Author(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   first_name = db.Column(db.String(20))
   last_name = db.Column(db.String(20), nullable=False)
+  avatar = db.Column(db.String(100), nullable=True)
   created_at = db.Column(db.DateTime,  default=lambda: datetime.now(timezone.utc)) 
   updated_at = db.Column(db.DateTime,  default=lambda: datetime.now(timezone.utc))
   
@@ -53,6 +54,7 @@ class AuthorSchema(SQLAlchemyAutoSchema):
   id = fields.Number(dump_only=True)
   first_name = fields.String(required=True)
   last_name = fields.String(required=True)
+  avatar = fields.String(dump_only=True)
   created_at = fields.DateTime(dump_only=True)
   updated_at = fields.DateTime(dump_only=True)
   books = fields.Nested('BookSchema', many=True, exclude=('author_id',))

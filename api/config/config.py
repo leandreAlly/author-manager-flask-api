@@ -19,6 +19,7 @@ class DevelopmentConfig(Config):
    MAIL_PASSWORD= 'your_email_password'
    MAIL_USE_TLS= False
    MAIL_USE_SSL= True
+   UPLOAD_FOLDER = 'images'
 
 
 class TestingConfig(Config):
