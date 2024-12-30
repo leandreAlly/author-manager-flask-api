@@ -1,0 +1,16 @@
+paths:
+  /authors:
+    post:
+      tags: [Authors]
+      summary: Create new author
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                last_name:
+                  type: string
