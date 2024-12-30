@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      .email-container {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .button {
+        background-color: #4caf50;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <h2>Welcome to Our Platform!</h2>
+      <p>
+        Thanks for signing up. To complete your registration, please verify your
+        email address.
+      </p>
+      <p>
+        <a href="{{ verification_email }}" class="button"
+          >Verify Email Address</a
+        >
+      </p>
+      <p>Or copy and paste this link in your browser:</p>
+      <p>{{ verification_email }}</p>
+      <p>This link will expire in 24 hours.</p>
+      <br />
+      <p>Best regards,<br />The Team</p>
+    </div>
+  </body>
+</html>
