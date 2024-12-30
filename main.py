@@ -1,7 +1,7 @@
 
 import os
 import logging
-from flask import Flask,jsonify
+from flask import Flask,send_from_directory
 from api.utils.database import db
 from api.config.config import ProductionConfig, TestingConfig, DevelopmentConfig
 from flask_jwt_extended import JWTManager 
@@ -35,7 +35,12 @@ with app.app_context():
 app.register_blueprint(author_routes, url_prefix='/api/authors')
 app.register_blueprint(book_routes, url_prefix='/api/books')
 app.register_blueprint(user_routes, url_prefix='/api/users')
+
 # START GLOBAL HTTP CONFIGURATIONS
+@app.route('/avatar/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
 @app.after_request
 def add_header(response):
     return response
