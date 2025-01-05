@@ -1,0 +1,22 @@
+openapi: 3.0.0
+info:
+  title: Flask Author DB
+  version: 1.0.0
+  description: API for managing authors and books
+servers:
+  - url: http://localhost:5000/api
+paths:
+  /authors:
+    $ref: 'authors.yaml#/paths/~1authors'
+  /users:
+    $ref: 'users.yaml#/paths/~1users'
+  # /books:
+  #   $ref: 'books.yaml#/paths/~1books'
+components:
+  schemas:
+    Author:
+      $ref: 'authors.yaml#/components/schemas/Author'
+    User:
+      $ref: 'users.yaml#/components/schemas/User'
+    # Book:
+    #   $ref: 'books.yaml#/components/schemas/Book'
