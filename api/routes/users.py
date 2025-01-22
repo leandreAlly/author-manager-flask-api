@@ -50,8 +50,8 @@ def create_user():
             html = render_template("email/verification.html", verification_email=verification_email)
             subject = "Please Verify your email"
             #send_email(user.email, subject, html)
-            print("verification:+++++",token)
-            print("url:+++++",verification_email)
+            # print("verification:+++++",token)
+            # print("url:+++++",verification_email)
             result = user_schema.dump(user.create())
 
             return response_with(
