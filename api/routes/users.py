@@ -123,9 +123,17 @@ def verify_email(token):
     except Exception as e:
         return response_with(resp.SERVER_ERROR_404)
     
-    user = User.query.filter_by(email=email).first_or_404()
+    user = User.query.filter_by(email=email).first()
+    if not user :
+        return response_with(
+            resp.SERVER_ERROR_404,
+            message="User not found!"
+        )
     if user.is_verified:
-        return response_with(resp.INVALID_INPUT_422)
+        return response_with(
+            resp.INVALID_INPUT_422,
+            message="The email is already verified!"
+            )
     else:
         user.is_verified = True
         db.session.add(user)
